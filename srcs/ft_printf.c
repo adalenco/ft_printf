@@ -49,44 +49,7 @@ size_t						ft_put_mult(char c, size_t n)
 	return (n);
 }
 
-void						ft_print_conversion(t_struct *data, int j)
-{
-	if (j == 9 || j == 10)
-		data->base = 8;
-	if (j == 11 || j == 12)
-		data->base = 16;
-	if (j == 12)
-		data->X = 1;
-	if (data->z == 1)
-	{
-		if (j >= 7 && j <= 12)
-		{
-			ft_print_uint(data, (ULL)va_arg(data->ap, size_t));
-			return;
-		}
-	}
-	if ((j == 0 || j == 1) && data->l != 1)
-		ft_print_char(data, j);
-	else if (j == 3 || (j == 1 && data->l == 1))
-		ft_print_wchar(data);
-	else if (j == 2 || (j == 0 && data->l == 1))
-		ft_print_wstr(data);
-	else if ((j == 4 || j == 6) && \
-			(data->l == 0 && data->h == 0 && data->z == 0))
-		ft_print_int(data, (LL)va_arg(data->ap, int));
-	else if (((j == 4 || j == 6) && (data->l == 1 || data->z == 1)) || \
-			(j == 5 && ((data->l == 0 && data->h == 0) || data->l == 1 )))
-		ft_print_int(data, (LL)va_arg(data->ap, long int));
-	else if ((j >= 4 && j <= 6) && data->l == 2)
-		ft_print_int(data, va_arg(data->ap, long long int));
-	else if ((j >= 7 && j <= 12 && j != 10) && data->l == 0 && data->h == 0)
-		ft_print_uint(data, (ULL)va_arg(data->ap, unsigned int));
-	else if (((j >= 7 && j <= 12 && j != 10) && data->l == 1) || \
-			((j == 8 || j == 10) && (data->l == 0 && data->h == 0)))
-		ft_print_uint(data, (ULL)va_arg(data->ap, unsigned long int));
-	else if ((j >= 7 && j <= 12) && data->l == 2)
-		ft_print_int(data, va_arg(data->ap, unsigned long long int));
-}
+
 
 int							ft_parse_format(t_struct *data)
 {

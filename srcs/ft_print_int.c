@@ -58,3 +58,46 @@ void		ft_print_uint(t_struct *data, unsigned long long int n)
 	ft_wid_ulln(data, n) : \
 	ft_wid_ullnm(data, n);
 }
+
+static void	ft_put_ad(void *p)
+{
+	unsigned long adr;
+	char *base;
+	char res[9];
+	int i;
+ 
+ 	res[8] = '\0';
+	adr = (unsigned long) p;
+	base = "0123456789ABCDEF";
+	i = 7;
+	while (i > 0)
+	{
+		res[i] = base[(adr % 16)];
+		adr /= 16;
+		i--;
+	}
+	res[i] = base[(adr % 16)];
+	while (i < 9)
+	{
+		putchar (res[i]);
+		i++;
+	}
+}
+
+void		ft_print_ad(t_struct *data, void *p)
+{
+	if (data->moins == 0)
+	{
+		if (data->wid > 8)
+			data->nb_char += ft_put_mult(' ', data->wid - 8);
+		ft_put_ad(p);
+		data->nb_char += 8;
+	}
+	else
+	{
+		ft_put_ad(p);
+		data->nb_char += 8;
+		if (data->wid > 8)
+			data->nb_char += ft_put_mult(' ', data->wid - 8);
+	}
+}

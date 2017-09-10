@@ -32,9 +32,11 @@ static int							ft_no_conversion(t_struct *data, char c)
 
 static void						ft_parse_flags3(t_struct *data, int j)
 {
-	int						i;
+	int							i;
 
 	i = 0;
+	if (j == 10 && data->l == 0)
+		data->l = 2;
 	if (j == 6)
 	{
 		if (data->l == 0 || data->l == 1)
@@ -68,6 +70,8 @@ static void						ft_parse_flags2(t_struct *data, int j)
 		data->moins = 1;
 	else if (j == 4 && data->plus == 0)
 		data->plus = ' ';
+	else if (j == 11 && data->h == 0)
+		data->h = 2;
 	else if (j == 5)
 	{
 		if (data->h == 0 || data->h == 1)
@@ -79,13 +83,13 @@ static void						ft_parse_flags2(t_struct *data, int j)
 		ft_parse_flags3(data, j);
 }
 
-int							ft_parse_flags(t_struct *data, size_t i)
+int								ft_parse_flags(t_struct *data, size_t i)
 {
 	char	*mask;
 	int		j;
 
 	j = 0;
-	mask = "#0+- hljz.";
+	mask = "#0+- hljz.LH";
 	while (mask[j])
 	{
 		if (mask[j] == data->fcpy[i])
@@ -117,7 +121,7 @@ void						ft_parse_conversion(t_struct *data, size_t i)
 	char	*mask;
 
 	j = 0;
-	mask = "scSCdDiuUoOxXpb";
+	mask = "scSCdDiuUoOxXbp";
 	while (data->fcpy[i])
 	{
 		data->i = i;

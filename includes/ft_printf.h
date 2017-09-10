@@ -46,5 +46,6 @@ void				ft_print_wstr(t_struct *data);
 void				ft_print_conversion(t_struct *data, int j);
 void				ft_wid_ullnm(t_struct *data, unsigned long long int n);
 void				ft_wid_ulln(t_struct *data, unsigned long long int n);
+void				ft_print_conversion(t_struct *data, int j)
 
 #endif
