@@ -53,9 +53,8 @@ void						ft_print_char(t_struct *data, int j)
 	if (j == 0)
 	{
 		if ((str = va_arg(data->ap, char *)) == NULL)
-			data->nb_char += write(1, "(null)", 6);
-		else
-			data->moins == 0 ? ft_wid(data, str) : ft_wid_moins(data, str);
+			str = "(null)";
+		data->moins == 0 ? ft_wid(data, str) : ft_wid_moins(data, str);
 		return;
 	}
 	c = va_arg(data->ap, int);
