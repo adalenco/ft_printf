@@ -6,7 +6,7 @@
 #    By: adalenco <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/27 21:24:43 by adalenco          #+#    #+#              #
-#    Updated: 2017/09/08 05:34:34 by adalenco         ###   ########.fr        #
+#    Updated: 2017/09/12 23:47:55 by adalenco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,9 @@ FC =	ft_printf.c \
 		ft_print_char.c \
 		ft_print_int.c \
 		ft_print_int_wid.c \
-		ft_print_wstr.c
+		ft_print_wstr.c \
+		ft_print_conversion.c \
+		ft_print_short.c
 
 FCO =	$(FC:.c=.o)
 

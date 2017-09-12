@@ -6,15 +6,13 @@
 /*   By: adalenco <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/03 00:03:45 by adalenco          #+#    #+#             */
-/*   Updated: 2017/09/08 05:40:10 by adalenco         ###   ########.fr       */
+/*   Updated: 2017/09/13 00:14:53 by adalenco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-
-
-static void					ft_data_init(t_struct *data)
+static void			ft_data_init(t_struct *data)
 {
 	data->ash = 0;
 	data->wid = 0;
@@ -29,13 +27,13 @@ static void					ft_data_init(t_struct *data)
 	data->base = 10;
 	data->size = 0;
 	data->nblen = 0;
-	data->X = 0;
+	data->x = 0;
 }
 
-size_t						ft_put_mult(char c, size_t n)
+size_t				ft_put_mult(char c, size_t n)
 {
-	char					str[n + 1];
-	size_t					i;
+	char			str[n + 1];
+	size_t			i;
 
 	if (n == 0)
 		return (0);
@@ -49,11 +47,9 @@ size_t						ft_put_mult(char c, size_t n)
 	return (n);
 }
 
-
-
-int							ft_parse_format(t_struct *data)
+int					ft_parse_format(t_struct *data)
 {
-	size_t	i;
+	size_t			i;
 
 	i = 0;
 	while (data->fcpy[i])
@@ -64,8 +60,10 @@ int							ft_parse_format(t_struct *data)
 			i++;
 			data->nb_char++;
 		}
-		 else
+		else
 		{
+			if (data->fcpy[i + 1] == 0)
+				return (0);
 			ft_data_init(data);
 			data->posi = i;
 			ft_parse_conversion(data, i + 1);
@@ -75,9 +73,9 @@ int							ft_parse_format(t_struct *data)
 	return (0);
 }
 
-int							ft_printf(const char *format, ...)
+int					ft_printf(const char *format, ...)
 {
-	t_struct	data;
+	t_struct		data;
 
 	va_start(data.ap, format);
 	data.nb_char = 0;
@@ -87,8 +85,7 @@ int							ft_printf(const char *format, ...)
 		if ((data.fcpy = va_arg(data.ap, char *)) == NULL)
 			data.nb_char += write(1, "(null)", 6);
 		else
-			data.nb_char = ft_strlen(data.fcpy);
-			ft_putstr(data.fcpy);
+			data.nb_char = write(1, data.fcpy, ft_strlen(data.fcpy));
 	}
 	else
 		ft_parse_format(&data);

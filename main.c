@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_base_maj.c                                  :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adalenco <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/08 02:30:22 by adalenco          #+#    #+#             */
-/*   Updated: 2017/09/12 17:26:45 by adalenco         ###   ########.fr       */
+/*   Created: 2017/09/12 16:42:32 by adalenco          #+#    #+#             */
+/*   Updated: 2017/09/12 23:57:27 by adalenco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <ft_printf.h>
+#include <stdio.h>
+#include <limits.h>
 
-size_t			ft_put_base_maj(unsigned long long n, int base)
+int			main(void)
 {
-	size_t		i;
-	char		*strbase;
+	int yo;
 
-	i = 0;
-	strbase = "0123456789ABCDEF";
-	if (n / base > 0)
-	{
-		i = ft_put_base_maj(n / base, base);
-		ft_putchar(strbase[n % base]);
-		i++;
-	}
-	else
-	{
-		ft_putchar(strbase[n % base]);
-		i++;
-	}
-	return (i);
+	printf("retour : %d\n", ft_printf("%#.o", 42));
+	//printf("retour : %d\n", ft_printf("%S\n", NULL));
+	printf("retour : %d\n", printf("%#.o", 42));
+	return (0);
 }
