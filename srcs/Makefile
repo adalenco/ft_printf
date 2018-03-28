@@ -6,7 +6,7 @@
 #    By: adalenco <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/27 21:24:43 by adalenco          #+#    #+#              #
-#    Updated: 2017/10/10 06:23:49 by adalenco         ###   ########.fr        #
+#    Updated: 2017/10/10 05:30:43 by adalenco         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,21 +36,22 @@ LIBFT = ./libft
 
 all: $(NAME)
 
-$(NAME): libftmake $(FCO)
+$(NAME): $(FCO)
 		@ar rc printf.a $(FCO)
 		@ranlib printf.a
 		@libtool -static -o $(NAME) printf.a ./libft/libft.a
+		@rm -rf printf.a
 		@echo "\033[33;32mlibrary ft_printf created"
-		@rm printf.a
 
-libftmake:
-		@make -C ./libft
-
-$(FCO):
+$(FCO): libmake
 		@$(COMP) -c $(SRC) -I $(INC)/ -I $(LIBFT)/includes
+		@echo "\033[33;32mobjects created"
+
+libmake:
+		@cd $(LIBFT) && $(MAKE)
 
 clean:
-		@make clean -C ./libft
+		@cd $(LIBFT) && make clean
 		@rm -rf $(FCO)
 		@echo "\033[33;31m Files .o deleted"
 

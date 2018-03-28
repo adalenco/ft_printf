@@ -6,7 +6,7 @@
 /*   By: adalenco <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 22:32:31 by adalenco          #+#    #+#             */
-/*   Updated: 2017/09/08 04:14:38 by adalenco         ###   ########.fr       */
+/*   Updated: 2017/09/13 00:14:56 by adalenco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ void						ft_print_wstr(t_struct *data)
 {
 	wchar_t					*wstr;
 
-	wstr = va_arg(data->ap, wchar_t *);
+	if ((wstr = va_arg(data->ap, wchar_t *)) == NULL)
+	{
+		ft_print_str(data, NULL);
+		return ;
+	}
 	if (data->moins == 0)
 		ft_print_wstr_wid(data, wstr);
 	else
@@ -120,4 +124,3 @@ void						ft_print_wchar(t_struct *data)
 		data->nb_char += ft_put_mult(data->zero, data->wid - ft_wcharlen(cu));
 	}
 }
-

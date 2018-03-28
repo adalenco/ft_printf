@@ -6,13 +6,13 @@
 /*   By: adalenco <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 23:08:45 by adalenco          #+#    #+#             */
-/*   Updated: 2017/09/08 03:45:52 by adalenco         ###   ########.fr       */
+/*   Updated: 2017/10/10 05:25:59 by adalenco         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int							ft_no_conversion(t_struct *data, char c)
+static int		ft_no_conversion(t_struct *data, char c)
 {
 	if (data->wid == 0)
 		data->wid = 1;
@@ -30,11 +30,13 @@ static int							ft_no_conversion(t_struct *data, char c)
 	return (1);
 }
 
-static void						ft_parse_flags3(t_struct *data, int j)
+static void		ft_parse_flags3(t_struct *data, int j)
 {
-	int						i;
+	int			i;
 
 	i = 0;
+	if (j == 10 && data->l == 0)
+		data->l = 2;
 	if (j == 6)
 	{
 		if (data->l == 0 || data->l == 1)
@@ -47,16 +49,10 @@ static void						ft_parse_flags3(t_struct *data, int j)
 	else if (j == 8)
 		data->z = 1;
 	else if (j == 9)
-	{
-		i = data->i + 1;
-		data->acc = ft_atoi(data->fcpy + i);
-		while (data->fcpy[i] <= '9' && data->fcpy[i] >= '0')
-			i++;
-		data->i = i - 1;
-	}
+		get_acc(data);
 }
 
-static void						ft_parse_flags2(t_struct *data, int j)
+static void		ft_parse_flags2(t_struct *data, int j)
 {
 	if (j == 0)
 		data->ash = 1;
@@ -68,6 +64,8 @@ static void						ft_parse_flags2(t_struct *data, int j)
 		data->moins = 1;
 	else if (j == 4 && data->plus == 0)
 		data->plus = ' ';
+	else if (j == 11 && data->h == 0)
+		data->h = 2;
 	else if (j == 5)
 	{
 		if (data->h == 0 || data->h == 1)
@@ -79,13 +77,13 @@ static void						ft_parse_flags2(t_struct *data, int j)
 		ft_parse_flags3(data, j);
 }
 
-int							ft_parse_flags(t_struct *data, size_t i)
+int				ft_parse_flags(t_struct *data, size_t i)
 {
-	char	*mask;
-	int		j;
+	char		*mask;
+	int			j;
 
 	j = 0;
-	mask = "#0+- hljz.";
+	mask = "#0+- hljz.LH";
 	while (mask[j])
 	{
 		if (mask[j] == data->fcpy[i])
@@ -95,46 +93,36 @@ int							ft_parse_flags(t_struct *data, size_t i)
 		}
 		j++;
 	}
-	if (data->fcpy[i] <= '9' && data->fcpy[i] >= '1')
-	{
-		data->wid = ft_atoi(data->fcpy + i);
-		while (data->fcpy[i] <= '9' && data->fcpy[i] >= '0')
-		{
-			if (data->fcpy[i] == 0)
-				return (1);
-			i++;
-		}
-		data->i = i - 1;
-	}
+	if ((data->fcpy[i] <= '9' && data->fcpy[i] >= '1') || data->fcpy[i] == '*')
+		get_width(data, i);
 	else
 		return (ft_no_conversion(data, data->fcpy[i]));
 	return (0);
 }
 
-void						ft_parse_conversion(t_struct *data, size_t i)
+void			ft_parse_conversion(t_struct *data, size_t i)
 {
-	int		j;
-	char	*mask;
+	int			j;
+	char		*mask;
 
 	j = 0;
-	mask = "scSCdDiuUoOxXpb";
+	mask = "scSCdDiuUoOxXbp";
 	while (data->fcpy[i])
 	{
 		data->i = i;
 		j = 0;
-		while(mask[j])
+		while (mask[j])
 		{
 			if (data->fcpy[i] == mask[j])
 			{
 				ft_print_conversion(data, j);
-				return;
+				return ;
 			}
 			j++;
 		}
 		if (ft_parse_flags(data, i) == 1)
-			return;
+			return ;
 		i = data->i + 1;
 	}
-	return;
+	return ;
 }
-
